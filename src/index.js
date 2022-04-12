@@ -73,6 +73,17 @@ const Presentation = () => (
     </Slide>
     <Slide>
       <FlexBox height="100%" flexDirection="column">
+        <Heading>Who am I?</Heading>
+        <Heading fontSize="h3">Pavel Shchegolev</Heading>{" "}
+        <UnorderedList>
+          <ListItem>10 years in JavaScript</ListItem>
+          <ListItem>Principal Front-end Engineer at Gainsight</ListItem>
+          <ListItem>Co-founder of Gorazdo.Studio</ListItem>
+        </UnorderedList>
+      </FlexBox>
+    </Slide>
+    <Slide>
+      <FlexBox height="100%" flexDirection="column">
         <Heading margin="0px" fontSize="h2">
           Why is that important?
         </Heading>
@@ -431,9 +442,9 @@ const Presentation = () => (
     </Slide>
     <Slide>
       <FlexBox height="100%" flexDirection="column">
-        <Heading>Thanks for watching</Heading>
+        <Heading>Thanks for your time</Heading>
         <Appear>
-          <Heading fontSize="h3">Questions time</Heading>
+          <Heading fontSize="h3">paul@gorazdo.studio</Heading>
         </Appear>
       </FlexBox>
     </Slide>
