@@ -73,12 +73,13 @@ const Presentation = () => (
     </Slide>
     <Slide>
       <FlexBox height="100%" flexDirection="column">
-        <Heading>Who am I?</Heading>
+        <Heading>About me</Heading>
         <Heading fontSize="h3">Pavel Shchegolev</Heading>{" "}
         <UnorderedList>
           <ListItem>10 years in JavaScript</ListItem>
           <ListItem>Principal Front-end Engineer at Gainsight</ListItem>
           <ListItem>Co-founder of Gorazdo.Studio</ListItem>
+          <ListItem>Have 2 rabbits 🐰🐇</ListItem>
         </UnorderedList>
       </FlexBox>
     </Slide>
@@ -89,13 +90,13 @@ const Presentation = () => (
         </Heading>
         <UnorderedList>
           <Appear>
-            <ListItem>Bundle size</ListItem>
+            <ListItem>Bundle size 📉</ListItem>
           </Appear>
           <Appear>
-            <ListItem>Learning curve</ListItem>
+            <ListItem>Learning curve 👨‍🏫</ListItem>
           </Appear>
           <Appear>
-            <ListItem>Maintainability</ListItem>
+            <ListItem>Maintainability 🔨</ListItem>
           </Appear>
         </UnorderedList>
       </FlexBox>
