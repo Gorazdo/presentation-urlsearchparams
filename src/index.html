@@ -3,6 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <style>
+      pre {
+        transform: scale(1.5);
+        transform-origin: left;
+      }
+      pre code > span {
+        transition: opacity, filter, text-shadow 200ms ease-in;
+      }
+      pre span[style^="opacity: 1"] {
+        filter: brightness(1.2) saturate(2);
+        text-shadow: 0 0 10px;
+      }
+    </style>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

@@ -8,4 +8,5 @@ export const theme = {
     secondary: "#c9fa9f",
     tertiary: "#1f5cf8",
   },
+  size: {},
 };

@@ -47,29 +47,12 @@ const template = () => (
 );
 // SPECTACLE_CLI_TEMPLATE_END
 
-const SlideFragments = () => (
-  <>
-    <Slide>
-      <Text>This is a slide fragment.</Text>
-    </Slide>
-    <Slide>
-      <Text>This is also a slide fragment.</Text>
-      <Appear>
-        <Text>This item shows up!</Text>
-      </Appear>
-      <Appear>
-        <Text>This item also shows up!</Text>
-      </Appear>
-    </Slide>
-  </>
-);
-
 const Presentation = () => (
   <Deck theme={theme} template={template}>
     <Slide>
       <FlexBox height="100%" flexDirection="column">
         <Heading>
-          You might don't need a{" "}
+          You (might) don't need a{" "}
           <code>
             $&#123;
             <CodeSpan color="primary" fontSize="inherit">
@@ -138,13 +121,59 @@ const Presentation = () => (
       </UnorderedList>
     </Slide>
     <Slide>
+      <Heading>What do they do?</Heading>
+      <FlexBox height="100%" flexDirection="column">
+        <CodePane
+          textSize={40}
+          language="javascript"
+          highlightRanges={[
+            [3, 4],
+            [6, 10],
+          ]}
+        >
+          {`
+      import qs from 'qs'
+
+      const url = "search=How+to+use+search+params%3F&type=blog&sort=ASC"
+      qs.parse(url);
+
+      const query = {
+        search: 'How to use search params?',
+        type: 'blog',
+        sort: 'ASC',
+      }
+        `}
+        </CodePane>
+        <Box margin="20px"></Box>
+      </FlexBox>
+    </Slide>
+    <Slide>
       <Heading>URLSearchParams API</Heading>
       <OrderedList>
         <Appear>
-          <ListItem>Available in Browsers and NodeJS</ListItem>
+          <ListItem>
+            Available in{" "}
+            <Text
+              style={{ display: "inline" }}
+              margin="0px"
+              padding="0px"
+              color="secondary"
+            >
+              modern Browsers
+            </Text>{" "}
+            and{" "}
+            <Text
+              style={{ display: "inline" }}
+              margin="0px"
+              padding="0px"
+              color="secondary"
+            >
+              NodeJS
+            </Text>
+          </ListItem>
         </Appear>
         <Appear>
-          <ListItem>Has similar syntax to other native APIs</ListItem>
+          <ListItem>Has a similar syntax to other native APIs</ListItem>
         </Appear>
         <Appear>
           <ListItem>Decodes and encodes under the hood</ListItem>
@@ -164,60 +193,76 @@ const Presentation = () => (
       </OrderedList>
     </Slide>
     <Slide>
-      <Heading>From Objects and Arrays</Heading>
+      <Heading>From Objects</Heading>
       <FlexBox height="100%" flexDirection="column">
-        <CodePane language="jsx">{`
+        <CodePane language="javascript" highlightRanges={[[1, 4], 6, 7]}>{`
       const searchParams = new URLSearchParams({
-        key: 'value'
+        key: 'value',
+        sort: 'ASC'
       });
 
       searchParams.get('key')   // 'value'
-      searchParams.toString()   // 'key=value'
+      searchParams.toString()   // 'key=value&sort=ASC'
         `}</CodePane>
-        <Box height={20} />
-        <Appear>
-          <CodePane language="jsx">{`
+      </FlexBox>
+    </Slide>
+    <Slide>
+      <Heading>From Arrays</Heading>
+      <FlexBox height="100%" flexDirection="column">
+        <CodePane language="javascript" highlightRanges={[[1, 5], 7, 8]}>{`
       const searchParams = new URLSearchParams([
-        ['key', 'value1'],
-        ['key', 'value2'],
+        ['colors', 'red'],
+        ['colors', 'green'],
+        ['colors', 'blue'],
       ]);
       
-      searchParams.getAll('key')  // ['value1', 'value2']
-      searchParams.toString()     // 'key=value1&key=value2'
+      searchParams.getAll('key')  // ['red', 'green', 'blue']
+      searchParams.toString()     // 'colors=red&colors=green&colors=blue'
         `}</CodePane>
-        </Appear>
       </FlexBox>
     </Slide>
     <Slide>
-      <Heading>From string</Heading>
+      <Heading>From String</Heading>
       <FlexBox height="100%" flexDirection="column">
-        <CodePane language="jsx">{`
-      const searchParams = new URLSearchParams('?hi=Mom');
+        <CodePane
+          language="javascript"
+          highlightRanges={[
+            [1, 2],
+            [4, 5],
+            [7, 11],
+          ]}
+        >{`
+      const string = '?hey=Mom&look%20ma=No%20Querystring'
+      const searchParams = new URLSearchParams(string);
 
-      searchParams.get('hi')   // 'Mom'
-        `}</CodePane>
-        <Box height={20} />
-        <Appear>
-          <CodePane language="jsx">{`
-      const searchParams = new URLSearchParams('message=An+Error%20Message');
+      searchParams.get('hey')   // 'Mom'
+      searchParams.get('look ma')   // 'No Querystring'
 
-      searchParams.get('message')   // 'An Error Message'
+      for (const pair of searchParams.entries()) {
+          console.log(pair)
+          // ['hey', 'Mom']
+          // ['look ma', 'No Querystring']
+      }
         `}</CodePane>
-        </Appear>
       </FlexBox>
     </Slide>
     <Slide>
+      <Heading>
+        Has a similar API as <CodeSpan fontSize="inherit">FormData</CodeSpan>
+      </Heading>
       <FlexBox height="100%" flexDirection="column">
-        <Heading>
-          Has similar API to <CodeSpan fontSize="inherit">FormData</CodeSpan>
-        </Heading>
-        <CodePane language="jsx">{`
+        <CodePane
+          language="javascript"
+          highlightRanges={[
+            [3, 4],
+            [6, 7],
+          ]}
+        >{`
       const searchParams = new URLSearchParams();
 
       searchParams.append('key', 'value with space')
       searchParams.append('key', 'value')
 
-      searchParams.get('key')     // 'value'
       searchParams.getAll('key')  // ['value', 'value with space']
       searchParams.toString()     // 'key=value&key=value+with+space'
         `}</CodePane>
@@ -225,80 +270,164 @@ const Presentation = () => (
       </FlexBox>
     </Slide>
     <Slide>
-      <FlexBox height="100%" flexDirection="column">
-        <Heading>Methods overview</Heading>
-        <FlexBox flexDirection="row" width="100%" justifyContent="space-around">
-          <CodePane overflow="hidden" width="300px" language="jsx">{`
-        // iterators
-        .forEach()
-        .entries()
-        .values()
-        .keys()
+      <Heading>Methods overview</Heading>
+      <Appear>
+        <CodePane
+          language="typescript"
+          highlightRanges={[
+            [3, 9],
+            [11, 14],
+            [16, 18],
+            [20, 24],
+            [26, 29],
+          ]}
+        >{`
+        //
+    class URLSearchParams implements Iterable<[string, string]> {
+      constructor(init?: 
+        | URLSearchParams 
+        | string 
+        | { [key: string]: string | ReadonlyArray<string> | undefined } 
+        | Iterable<[string, string]> 
+        | ReadonlyArray<[string, string]>
+      );
+
+      // iterators
+      entries(): IterableIterator<[string, string]>;
+      keys(): IterableIterator<string>;
+      values(): IterableIterator<string>;
+
+      // Array-like methods
+      forEach(callback: (value: string, name: string, searchParams: URLSearchParams) => void): void;
+      sort(): void;
+
+      // read
+      has(name: string): boolean;
+      get(name: string): string | null;
+      getAll(name: string): string[];
+      toString(): string;
+      
+      // write
+      append(name: string, value: string): void;
+      delete(name: string): void;
+      set(name: string, value: string): void;
+      
+      [Symbol.iterator](): IterableIterator<[string, string]>;
+    }
         `}</CodePane>
-          <CodePane overflow="hidden" width="300px" language="jsx">{`
-        // read methods
-        .has()
-        
-        .get()
-        .getAll()
-        `}</CodePane>
-          <CodePane overflow="hidden" width="300px" language="jsx">{`
-        // write methods
-        .append()
-        .set()
-        .delete()
-        .sort()
-        `}</CodePane>
-        </FlexBox>
+      </Appear>
+    </Slide>
+    <Slide>
+      <FlexBox height="100%" flexDirection="column" alignItems="center">
+        <Heading>Limitations</Heading>
       </FlexBox>
     </Slide>
     <Slide>
-      <Heading>Limitations</Heading>
-      <UnorderedList>
-        <ListItem>
-          Converts spaces as{" "}
-          <CodeSpan color="secondary" color="secondary">
-            +
-          </CodeSpan>
-          , but parses <CodeSpan color="secondary">%20</CodeSpan> as well
-        </ListItem>
-        <ListItem>Does not support nested objects</ListItem>
-        <ListItem>Does not convert arrays with commas</ListItem>
-        <ListItem>
-          Works in a combination with{" "}
-          <CodeSpan color="secondary">new URL()</CodeSpan> API
-        </ListItem>
-      </UnorderedList>
+      <Text>Does not support nested Objects and Arrays with commas</Text>
+      <FlexBox height="100%" flexDirection="column" alignItems="center">
+        <Appear>
+          <CodePane
+            language="javascript"
+            highlightRanges={[
+              [1, 4],
+              [5, 8],
+              [9, 16],
+            ]}
+          >{`
+        {
+          const searchParams = new URLSearchParams('color=red%2Cblue');
+          searchParams.get('color'); // 'red,blue'
+        }
+        {
+          const searchParams = new URLSearchParams('color=red&color=blue');
+          searchParams.getAll('color'); // ['red', 'blue']
+        }
+        {
+          const searchParams = new URLSearchParams({ 
+            filter: { price: 'USD' }, 
+            sort: 'ASC' 
+          });
+          searchParams.get('sort'); // 'ASC'
+          searchParams.get('filter'); // '[object Object]'
+        }
+        `}</CodePane>
+        </Appear>
+      </FlexBox>
+    </Slide>
+    <Slide>
+      <Text>
+        Converts spaces as <CodeSpan color="secondary">+</CodeSpan>, but parses{" "}
+        <CodeSpan color="secondary">%20</CodeSpan> as well
+      </Text>
+      <FlexBox height="100%" flexDirection="column" alignItems="center">
+        <CodePane
+          language="javascript"
+          highlightRanges={[
+            [2, 4],
+            [5, 9],
+          ]}
+        >{`
+        const searchParams = new URLSearchParams();
+        searchParams.set('greeting', 'Hello there! 👋')
+        searchParams.toString(); 
+        // greeting=Hello+there%21+%F0%9F%91%8B
+        
+        const rawSearchParams = 'Hello%20there!%20%F0%9F%91%8B';
+        const searchParams = new URLSearchParams(rawSearchParams);
+        searchParams.get('greeting');
+        // 'Hello there! 👋'
+        `}</CodePane>
+      </FlexBox>
     </Slide>
     <Slide>
       <FlexBox height="100%" flexDirection="column">
         <Heading>NodeJS</Heading>
-        <CodePane language="jsx" width="35em" overflow="hidden" margin="auto">{`
+        <CodePane language="javascript">{`
         const querystring = require('querystring')
         `}</CodePane>
         <Appear>
-          <Heading fontSize="h3">
+          <Heading fontSize="h3" color="primary">
+            <CodeSpan color="secondary" fontSize="inherit">
+              querystring
+            </CodeSpan>{" "}
             is deprecated since v14 in favor of{" "}
-            <CodeSpan fontSize="inherit">URLSearchParams</CodeSpan>
+            <CodeSpan color="secondary" fontSize="inherit">
+              URLSearchParams
+            </CodeSpan>
           </Heading>
         </Appear>
       </FlexBox>
     </Slide>
     <Slide>
-      <Heading>
-        <CodeSpan fontSize="inherit">new URL()</CodeSpan>
-      </Heading>
-
-      <CodePane language="jsx">{`
+      <FlexBox height="100%" flexDirection="column" alignItems="center">
+        <Heading>
+          Works in a combination with{" "}
+          <CodeSpan color="primary" fontSize="inherit">
+            new&nbsp;URL()
+          </CodeSpan>{" "}
+          API
+        </Heading>
+      </FlexBox>
+    </Slide>
+    <Slide>
+      <FlexBox height="100%" flexDirection="column" alignItems="center">
+        <CodePane
+          language="javascript"
+          highlightRanges={[1, [3, 5], [6, 10], 9, 11]}
+        >{`
         const myUrl = new URL('https://gorazdo.studio')
-        myUrl.searchParams.set('query', 'hi')
+
+        myUrl.searchParams.append('design', 'brand identity')
+        myUrl.searchParams.append('design', 'web sites')
+        myUrl.searchParams.append('design', 'mobile apps')
 
         myUrl.origin    // 'https://gorazdo.studio'
         myUrl.protocol  // 'https:'
-        myUrl.search    // '?hi=mom'
+        myUrl.search    // '?design=brand+identity&design=web+sites&desig...'
         
-        myUrl.href      // 'https://gorazdo.studio/?hi=mom'
+        myUrl.href      // 'https://gorazdo.studio/?design=brand+identity...'
         `}</CodePane>
+      </FlexBox>
     </Slide>
     <Slide>
       <FlexBox height="100%" flexDirection="column">
